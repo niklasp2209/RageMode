@@ -35,6 +35,7 @@ public class LobbyCountdown extends  Countdown{
                         break;
                     case 0:
                         gameStateUtils.setGameState(GameState.Ingame_State);
+                        stop();
                         break;
 
                     default:
@@ -73,5 +74,13 @@ public class LobbyCountdown extends  Countdown{
 
     public boolean isRunning() {
         return isRunning;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
     }
 }

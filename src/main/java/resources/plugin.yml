@@ -7,3 +7,5 @@ api: 1.16.5
 commands:
    setup:
      description: Spieleinstellungen von RageMode
+   start:
+     description: Spielstart in der Lobby
