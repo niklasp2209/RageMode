@@ -3,7 +3,13 @@ package countdowns;
 import de.niklas.ragemode.Ragemode;
 import gamestate.GameState;
 import gamestate.GameStateUtils;
+import mapvoting.Maps;
+import mapvoting.Voting;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class LobbyCountdown extends  Countdown{
 
@@ -27,8 +33,27 @@ public class LobbyCountdown extends  Countdown{
             @Override
             public void run() {
                 switch (seconds){
-                    case 90: case 60: case 30: case 15: case 10: case 3: case 2:
+                    case 90: case 60: case 30: case 15: case 10: case 5: case 3: case 2:
                         Bukkit.broadcastMessage(gameStateUtils.getPlugin().getPrefix()+"§7Die Runde beginnt in §e"+seconds+" §7Sekunden");
+
+                        if(seconds == 5){
+                            for(Player current : Bukkit.getOnlinePlayers()){
+                                current.getInventory().setItem(0, null);
+                                if(current.getOpenInventory() == null)return;
+                                if(current.getOpenInventory().getTitle().equals("§7● §eMap Abstimmung"))
+                                    current.closeInventory();
+                            }
+                            Voting voting = gameStateUtils.getPlugin().getVoting();
+                            Maps winnerMap;
+                            if(voting != null)
+                                winnerMap = voting.getWinnerMap();
+                            else{
+                                ArrayList<Maps> mapsArrayList = gameStateUtils.getPlugin().getMapsArrayList();
+                                Collections.shuffle(mapsArrayList);
+                                winnerMap = mapsArrayList.get(0);
+                            }
+                            Bukkit.broadcastMessage("§7[§6RageMode§7] §a"+winnerMap.getName()+" §7hat das §aMapvoting §7gewonnnen");
+                        }
                         break;
                     case 1:
                         Bukkit.broadcastMessage(gameStateUtils.getPlugin().getPrefix()+"§7Die Runde beginnt in §e"+seconds+" §7Sekunde");

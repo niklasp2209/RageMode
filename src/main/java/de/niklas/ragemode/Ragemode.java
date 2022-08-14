@@ -7,6 +7,7 @@ import gamestate.GameStateUtils;
 import listener.PlayerConnectionListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
+import mapvoting.VotingListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -19,6 +20,7 @@ public class Ragemode extends JavaPlugin {
     private GameStateUtils gameStateUtils;
     private Voting voting;
     private ArrayList<Player> players;
+    private ArrayList<Maps> mapsArrayList;
 
     private final byte min_Players = 1,
                        max_Players = 8;
@@ -27,19 +29,19 @@ public class Ragemode extends JavaPlugin {
 
     @Override
     public void onEnable(){
-        gameStateUtils = new GameStateUtils(this);
         players = new ArrayList<>();
+        gameStateUtils = new GameStateUtils(this);
 
         gameStateUtils.setGameState(GameState.Lobby_State);
+        startVoting();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerConnectionListener(this), this);
+        pluginManager.registerEvents(new VotingListener(this), this);
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
 
         System.out.println("[RageMode] Das Plugin wurde gstartet!");
-
-        startVoting();
     }
 
     @Override
@@ -48,7 +50,7 @@ public class Ragemode extends JavaPlugin {
     }
 
     public void startVoting(){
-        ArrayList<Maps> mapsArrayList = new ArrayList<>();
+        mapsArrayList = new ArrayList<>();
         for(String current : getConfig().getConfigurationSection("Maps").getKeys(false)) {
             Maps maps = new Maps(this, current);
             if (maps.isPlayable())
@@ -56,7 +58,12 @@ public class Ragemode extends JavaPlugin {
             else
                 Bukkit.getConsoleSender().sendMessage("§cDie Map §4" + maps.getName() + " §cist nicht fertig eingerichtet");
         }
+        if(mapsArrayList.size() >= 3)
         voting = new Voting(this, mapsArrayList);
+        else {
+            Bukkit.getConsoleSender().sendMessage("§4Es müssen mindestens 3 Maps eingerichtet sein!");
+            voting = null;
+        }
     }
 
     public ArrayList<Player> getPlayers() {
@@ -73,6 +80,10 @@ public class Ragemode extends JavaPlugin {
 
     public GameStateUtils getGameStateUtils() {
         return gameStateUtils;
+    }
+
+    public ArrayList<Maps> getMapsArrayList() {
+        return mapsArrayList;
     }
 
     public String getPrefix() {

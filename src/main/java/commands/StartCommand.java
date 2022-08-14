@@ -28,7 +28,7 @@ public class StartCommand implements CommandExecutor {
                         LobbyCountdown lobbyCountdown = lobbyState.getCountdown();
                         lobbyCountdown.setSeconds(10);
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
-                        player.sendMessage(plugin.getPrefix()+"§cDu hast das Spiel gestartet...");
+                        player.sendMessage(plugin.getPrefix()+"§cDu hast das Spiel gestartet");
                     }else
                         player.sendMessage(plugin.getPrefix()+"§cDas Spiel wurde bereits gestartet!");
                 }else

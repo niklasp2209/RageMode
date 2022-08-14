@@ -12,7 +12,7 @@ public class GameStateUtils {
         this.plugin = plugin;
         gameStates = new GameState[3];
         gameStates[GameState.Lobby_State] = new LobbyState(this);
-        gameStates[GameState.Ingame_State] = new IngameState();
+        gameStates[GameState.Ingame_State] = new IngameState(plugin);
         gameStates[GameState.End_State] = new EndState();
     }
 

@@ -4,12 +4,14 @@ import countdowns.LobbyCountdown;
 import de.niklas.ragemode.Ragemode;
 import gamestate.IngameState;
 import gamestate.LobbyState;
+import mapvoting.Voting;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import utils.ItemBuilder;
 import utils.LocationUtil;
 
 public class PlayerConnectionListener implements Listener {
@@ -27,6 +29,7 @@ public class PlayerConnectionListener implements Listener {
             event.setJoinMessage("§7» §a"+player.getDisplayName()+" §7hat die Runde betreten [§a"+
                     plugin.getPlayers().size()+"§7/§c"+plugin.getMax_Players()+"§7]");
 
+            new ItemBuilder().setLobbyItems(player);
             LocationUtil locationUtil = new LocationUtil(plugin, "Lobby");
             if(locationUtil.loadLocation() != null)
                 player.teleport(locationUtil.loadLocation());
@@ -57,6 +60,12 @@ public class PlayerConnectionListener implements Listener {
                     countdown.stop();
                     countdown.startIdle();
                 }
+            }
+            Voting voting = plugin.getVoting();
+            if(voting.getPlayerVotes().containsKey(player.getName())) {
+                voting.getVotingMaps()[voting.getPlayerVotes().get(player.getName())].removeVote();
+                voting.getPlayerVotes().remove(player.getName());
+                voting.initInventory();
             }
         }
     }
