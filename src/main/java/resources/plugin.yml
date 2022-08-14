@@ -1,0 +1,9 @@
+name: "RageMode"
+author: BukkitNews
+version: "1.0"
+main: de.niklas.ragemode.Ragemode
+api-version: 1.16
+api: 1.16.5
+commands:
+   setup:
+     description: Spieleinstellungen von RageMode
