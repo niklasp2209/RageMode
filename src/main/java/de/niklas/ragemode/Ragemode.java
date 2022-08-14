@@ -4,6 +4,7 @@ import commands.SetupCommand;
 import commands.StartCommand;
 import gamestate.GameState;
 import gamestate.GameStateUtils;
+import items.AxeListener;
 import listener.PlayerConnectionListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
@@ -37,6 +38,7 @@ public class Ragemode extends JavaPlugin {
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerConnectionListener(this), this);
+        pluginManager.registerEvents(new AxeListener(this), this);
         pluginManager.registerEvents(new VotingListener(this), this);
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));

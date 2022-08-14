@@ -1,6 +1,7 @@
 package gamestate;
 
 import countdowns.LobbyCountdown;
+import org.bukkit.Bukkit;
 
 public class LobbyState extends GameState{
 
@@ -17,7 +18,7 @@ public class LobbyState extends GameState{
 
     @Override
     public void stop() {
-
+        Bukkit.broadcastMessage("§7[§6RageMode§7] §cAlle Spieler wurde teleportiert");
     }
 
     public LobbyCountdown getCountdown() {
