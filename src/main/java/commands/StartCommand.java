@@ -26,11 +26,14 @@ public class StartCommand implements CommandExecutor {
                     if(plugin.getGameStateUtils().getCurrentGameState() instanceof LobbyState){
                         LobbyState lobbyState = (LobbyState) plugin.getGameStateUtils().getCurrentGameState();
                         LobbyCountdown lobbyCountdown = lobbyState.getCountdown();
-                        lobbyCountdown.setSeconds(10);
-                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
-                        player.sendMessage(plugin.getPrefix()+"§cDu hast das Spiel gestartet");
+                        if(lobbyCountdown.getSeconds() > 10) {
+                            lobbyCountdown.setSeconds(10);
+                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1L, 1L);
+                            player.sendMessage(plugin.getPrefix() + "§cDu hast das Spiel gestartet");
+                        }else
+                            player.sendMessage(plugin.getPrefix()+"§cDie Runde startet bereits");
                     }else
-                        player.sendMessage(plugin.getPrefix()+"§cDas Spiel wurde bereits gestartet!");
+                        player.sendMessage(plugin.getPrefix()+"§cDas Spiel wurde bereits gestartet");
                 }else
                     player.sendMessage(plugin.getPrefix()+"§cBenutze /start");
             }else

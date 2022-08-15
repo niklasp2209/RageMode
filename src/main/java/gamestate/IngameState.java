@@ -5,7 +5,10 @@ import de.niklas.ragemode.Ragemode;
 import mapvoting.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Score;
+import utils.FastBoard;
 import utils.ItemBuilder;
+import utils.ScoreboardManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,8 +35,15 @@ public class IngameState extends GameState{
         for(int i = 0; i < players.size(); i++)
             players.get(i).teleport(maps.getLocations()[i]);
 
-        for(Player current : Bukkit.getOnlinePlayers())
+        for(Player current : Bukkit.getOnlinePlayers()){
             current.getInventory().clear();
+            current.setLevel(0);
+            current.setExp(0);
+
+            FastBoard fastBoard = new FastBoard(current);
+            fastBoard.updateTitle("§6·§e• RageMode §8| §7Stats");
+            new ScoreboardManager(plugin).updateBoard(fastBoard);
+        }
 
         graceCountdown.start();
     }

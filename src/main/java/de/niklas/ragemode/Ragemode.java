@@ -5,6 +5,7 @@ import commands.StartCommand;
 import gamestate.GameState;
 import gamestate.GameStateUtils;
 import items.AxeListener;
+import listener.PlayerChatListener;
 import listener.PlayerConnectionListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
@@ -13,6 +14,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Score;
+import utils.ScoreboardManager;
 
 import java.util.ArrayList;
 
@@ -40,10 +43,14 @@ public class Ragemode extends JavaPlugin {
         pluginManager.registerEvents(new PlayerConnectionListener(this), this);
         pluginManager.registerEvents(new AxeListener(this), this);
         pluginManager.registerEvents(new VotingListener(this), this);
+        pluginManager.registerEvents(new ScoreboardManager(this), this);
+        pluginManager.registerEvents(new PlayerChatListener(this), this);
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
 
         System.out.println("[RageMode] Das Plugin wurde gstartet!");
+
+        new ScoreboardManager(this).startHotbar();
     }
 
     @Override

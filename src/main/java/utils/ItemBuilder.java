@@ -38,9 +38,13 @@ public class ItemBuilder {
 
     public void setLobbyItems(Player player){
         ItemStack item_Mapvoting = createItem(Material.PAPER, "§aMap Auswahl", 1, "§7● Rechtsklick zum benutzen");
+        ItemStack item_Achievements = createItem(Material.NETHER_STAR, "§aErfolge", 1, "§7● Rechtsklick zum benutzen");
+        ItemStack item_Explanation = createItem(Material.BOOK, "§aSpielanleitung", 1, "§7● Rechtsklick zum benutzen");
 
         player.getInventory().clear();
         player.getInventory().setItem(0, item_Mapvoting);
+        player.getInventory().setItem(7, item_Achievements);
+        player.getInventory().setItem(8, item_Explanation);
 
         player.setGameMode(GameMode.ADVENTURE);
         player.setMaxHealth(20);

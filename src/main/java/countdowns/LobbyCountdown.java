@@ -3,10 +3,13 @@ package countdowns;
 import de.niklas.ragemode.Ragemode;
 import gamestate.GameState;
 import gamestate.GameStateUtils;
+import gamestate.LobbyState;
 import mapvoting.Maps;
 import mapvoting.Voting;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import utils.FastBoard;
+import utils.ScoreboardManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +19,7 @@ public class LobbyCountdown extends  Countdown{
     private int idleID;
     private int seconds;
     private GameStateUtils gameStateUtils;
-    private final byte idle_Time = 15,
+    private final byte idle_Time = 10,
                        countdown_Time = 90;
     private boolean isIdling,
                     isRunning;
@@ -53,6 +56,14 @@ public class LobbyCountdown extends  Countdown{
                                 winnerMap = mapsArrayList.get(0);
                             }
                             Bukkit.broadcastMessage("§7[§6RageMode§7] §a"+winnerMap.getName()+" §7hat das §aMapvoting §7gewonnnen");
+
+                            for(Player current : Bukkit.getOnlinePlayers()){
+
+                                FastBoard fastBoard = new FastBoard(current);
+                                fastBoard.updateTitle("§6·§e• RageMode §8| §7Stats");
+                                new ScoreboardManager(gameStateUtils.getPlugin()).updateBoard(fastBoard);
+                                fastBoard.updateLine(3, "§7» §e"+ winnerMap.getName());
+                            }
                         }
                         break;
                     case 1:
@@ -65,6 +76,17 @@ public class LobbyCountdown extends  Countdown{
 
                     default:
                         break;
+                }
+
+                for(Player current : Bukkit.getOnlinePlayers()) {
+                    if(seconds == -1)return;
+                    if(gameStateUtils.getCurrentGameState() instanceof LobbyState) {
+                        current.setLevel(seconds);
+                        current.setExp(current.getExp() + (1F / 90));
+                    }else{
+                        current.setLevel(0);
+                        current.setExp(0);
+                    }
                 }
                 seconds--;
             }
