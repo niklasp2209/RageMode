@@ -81,8 +81,10 @@ public class LobbyCountdown extends  Countdown{
                 for(Player current : Bukkit.getOnlinePlayers()) {
                     if(seconds == -1)return;
                     if(gameStateUtils.getCurrentGameState() instanceof LobbyState) {
-                        current.setLevel(seconds);
-                        current.setExp(current.getExp() + (1F / 90));
+                        if(seconds > 0) {
+                            current.setLevel(seconds);
+                            current.setExp(current.getExp() + (1F / 90));
+                        }
                     }else{
                         current.setLevel(0);
                         current.setExp(0);

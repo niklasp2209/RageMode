@@ -86,8 +86,8 @@ public class ScoreboardManager implements Listener {
                     "§6·§e• §aKillstreak §7§o(Rekord)",
                     "§7»§e ",
                     " ",
-                    "§6·§e• §aGesamte Kills §7§o(bis Sieg)",
-                    "§7» §e",
+                    "§6·§e• §aPunkte §7§o(bis Sieg 20)",
+                    "§7» §e0",
                     " ",
                     ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "--------------------- ");
         }

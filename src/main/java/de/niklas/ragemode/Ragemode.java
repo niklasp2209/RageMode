@@ -7,6 +7,7 @@ import gamestate.GameStateUtils;
 import items.AxeListener;
 import listener.PlayerChatListener;
 import listener.PlayerConnectionListener;
+import listener.PlayerDeathListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
 import mapvoting.VotingListener;
@@ -23,6 +24,7 @@ public class Ragemode extends JavaPlugin {
 
     private GameStateUtils gameStateUtils;
     private Voting voting;
+    private PlayerDeathListener playerDeathListener;
     private ArrayList<Player> players;
     private ArrayList<Maps> mapsArrayList;
 
@@ -45,6 +47,7 @@ public class Ragemode extends JavaPlugin {
         pluginManager.registerEvents(new VotingListener(this), this);
         pluginManager.registerEvents(new ScoreboardManager(this), this);
         pluginManager.registerEvents(new PlayerChatListener(this), this);
+        pluginManager.registerEvents(new PlayerDeathListener(this), this);
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
 
@@ -105,5 +108,9 @@ public class Ragemode extends JavaPlugin {
 
     public Voting getVoting() {
         return voting;
+    }
+
+    public PlayerDeathListener getPlayerDeathListener() {
+        return playerDeathListener;
     }
 }

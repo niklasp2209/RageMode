@@ -2,6 +2,7 @@ package gamestate;
 
 import countdowns.GraceCountdown;
 import de.niklas.ragemode.Ragemode;
+import listener.PlayerDeathListener;
 import mapvoting.Maps;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,8 +33,10 @@ public class IngameState extends GameState{
 
         maps = plugin.getVoting().getWinnerMap();
         maps.load();
-        for(int i = 0; i < players.size(); i++)
+        for(int i = 0; i < players.size(); i++) {
             players.get(i).teleport(maps.getLocations()[i]);
+            PlayerDeathListener.points.put(players.get(i), 0);
+        }
 
         for(Player current : Bukkit.getOnlinePlayers()){
             current.getInventory().clear();

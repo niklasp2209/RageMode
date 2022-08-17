@@ -51,6 +51,8 @@ public class ItemBuilder {
         player.setHealth(20);
         player.setFoodLevel(20);
         player.setFlying(false);
+        player.setLevel(0);
+        player.setExp(0);
     }
 
     public void setIngameItems(Player player){

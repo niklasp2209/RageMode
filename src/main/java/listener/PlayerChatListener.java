@@ -25,7 +25,7 @@ public class PlayerChatListener implements Listener {
             String message = event.getMessage().split(" ")[0];
             HelpTopic helpTopic = Bukkit.getServer().getHelpMap().getHelpTopic(message);
             if(helpTopic == null){
-                player.sendMessage(plugin.getPrefix()+"§7"+message + " §7wurde nicht gefunden!");
+                player.sendMessage(plugin.getPrefix()+"§e"+message + " §7wurde nicht gefunden!");
                 event.setCancelled(true);
             }
         }
