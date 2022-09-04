@@ -2,8 +2,10 @@ package utils;
 
 import countdowns.LobbyCountdown;
 import de.niklas.ragemode.Ragemode;
+import gamestate.EndState;
 import gamestate.IngameState;
 import gamestate.LobbyState;
+import listener.PlayerDeathListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
 import net.md_5.bungee.api.ChatMessageType;
@@ -13,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
@@ -36,7 +39,7 @@ public class ScoreboardManager implements Listener {
         Player player = event.getPlayer();
 
         FastBoard fastBoard = new FastBoard(player);
-        fastBoard.updateTitle("§6·§e• RageMode §8| §7Stats");
+        fastBoard.updateTitle("§6·§e• CookieRage §8| §7Stats");
         boards.put(player.getUniqueId(), fastBoard);
         updateBoard(fastBoard);
     }
@@ -87,7 +90,15 @@ public class ScoreboardManager implements Listener {
                     "§7»§e ",
                     " ",
                     "§6·§e• §aPunkte §7§o(bis Sieg 20)",
-                    "§7» §e0",
+                    "§7» §e"+ PlayerDeathListener.points.get(player),
+                    " ",
+                    ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "--------------------- ");
+        }if(plugin.getGameStateUtils().getCurrentGameState() instanceof EndState) {
+            fastBoard.updateLines(
+                    ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "---------------------",
+                    " ",
+                    "§6·§e• §aSpiel beendet",
+                    "§7»§e /hub zum verlassen",
                     " ",
                     ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + "--------------------- ");
         }

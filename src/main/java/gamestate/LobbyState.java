@@ -18,7 +18,7 @@ public class LobbyState extends GameState{
 
     @Override
     public void stop() {
-        Bukkit.broadcastMessage("§7[§6RageMode§7] §cAlle Spieler wurde teleportiert");
+        Bukkit.broadcastMessage("§7[§6CookieRage§7] §cAlle Spieler wurde teleportiert");
     }
 
     public LobbyCountdown getCountdown() {

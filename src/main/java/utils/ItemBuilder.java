@@ -39,12 +39,12 @@ public class ItemBuilder {
     public void setLobbyItems(Player player){
         ItemStack item_Mapvoting = createItem(Material.PAPER, "§aMap Auswahl", 1, "§7● Rechtsklick zum benutzen");
         ItemStack item_Achievements = createItem(Material.NETHER_STAR, "§aErfolge", 1, "§7● Rechtsklick zum benutzen");
-        ItemStack item_Explanation = createItem(Material.BOOK, "§aSpielanleitung", 1, "§7● Rechtsklick zum benutzen");
+        ItemStack item_Leave = createItem(Material.MAGMA_CREAM, "§czurück zur Lobby", 1, "§7● Rechtsklick zum benutzen");
 
         player.getInventory().clear();
         player.getInventory().setItem(0, item_Mapvoting);
         player.getInventory().setItem(7, item_Achievements);
-        player.getInventory().setItem(8, item_Explanation);
+        player.getInventory().setItem(8, item_Leave);
 
         player.setGameMode(GameMode.ADVENTURE);
         player.setMaxHealth(20);
@@ -56,9 +56,9 @@ public class ItemBuilder {
     }
 
     public void setIngameItems(Player player){
-        ItemStack item_bow = createItemLore(Material.BOW, "§eRageBow", 1, Arrays.asList("§7Kann unendlich oft genutzt","§7werden und tötet Gegner mit","§7einem Schuss"));
-        ItemStack item_sword = createItemLore(Material.IRON_SWORD, "§cRageKnife", 1, Arrays.asList("§7Tötet Gegner mit einem Schlag"));
-        ItemStack item_axe = createItemLore(Material.IRON_AXE, "§bCombatAxe", 1, Arrays.asList("§7Kann einmalig geworfen werden", "§7und tötet Gegner beim treffen"));
+        ItemStack item_bow = createItemLore(Material.BOW, "§eBogen", 1, Arrays.asList("§7Kann unendlich oft genutzt","§7werden und tötet Gegner mit","§7einem Schuss"));
+        ItemStack item_sword = createItemLore(Material.IRON_SWORD, "§cMesser", 1, Arrays.asList("§7Tötet Gegner mit einem Schlag"));
+        ItemStack item_axe = createItemLore(Material.COOKIE, "§bCookie-Wurfstern", 1, Arrays.asList("§7Kann einmalig geworfen werden", "§7und tötet Gegner beim treffen"));
         ItemStack item_arrow = new ItemStack(Material.ARROW);
         item_bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
         item_bow.addEnchantment(Enchantment.DURABILITY, 3);

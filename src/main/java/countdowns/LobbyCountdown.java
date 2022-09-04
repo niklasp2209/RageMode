@@ -55,12 +55,12 @@ public class LobbyCountdown extends  Countdown{
                                 Collections.shuffle(mapsArrayList);
                                 winnerMap = mapsArrayList.get(0);
                             }
-                            Bukkit.broadcastMessage("§7[§6RageMode§7] §a"+winnerMap.getName()+" §7hat das §aMapvoting §7gewonnnen");
+                            Bukkit.broadcastMessage("§7[§6CookieRage§7] §a"+winnerMap.getName()+" §7hat das §aMapvoting §7gewonnnen");
 
                             for(Player current : Bukkit.getOnlinePlayers()){
 
                                 FastBoard fastBoard = new FastBoard(current);
-                                fastBoard.updateTitle("§6·§e• RageMode §8| §7Stats");
+                                fastBoard.updateTitle("§6·§e• CookieRage §8| §7Stats");
                                 new ScoreboardManager(gameStateUtils.getPlugin()).updateBoard(fastBoard);
                                 fastBoard.updateLine(3, "§7» §e"+ winnerMap.getName());
                             }
@@ -83,7 +83,7 @@ public class LobbyCountdown extends  Countdown{
                     if(gameStateUtils.getCurrentGameState() instanceof LobbyState) {
                         if(seconds > 0) {
                             current.setLevel(seconds);
-                            current.setExp(current.getExp() + (1F / 90));
+//                            current.setExp(current.getExp() + (1F / 90));
                         }
                     }else{
                         current.setLevel(0);

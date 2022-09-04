@@ -8,15 +8,19 @@ import items.AxeListener;
 import listener.PlayerChatListener;
 import listener.PlayerConnectionListener;
 import listener.PlayerDeathListener;
+import listener.PlayerListener;
 import mapvoting.Maps;
 import mapvoting.Voting;
 import mapvoting.VotingListener;
+import mysql.Mysql;
+import mysql.NayzAPI;
+import mysql.StatsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Score;
 import utils.ScoreboardManager;
+import utils.StatsRanking;
 
 import java.util.ArrayList;
 
@@ -27,16 +31,24 @@ public class Ragemode extends JavaPlugin {
     private PlayerDeathListener playerDeathListener;
     private ArrayList<Player> players;
     private ArrayList<Maps> mapsArrayList;
+    private StatsAPI statsAPI;
+    private StatsRanking statsRanking;
 
     private final byte min_Players = 1,
                        max_Players = 8;
-    private final String prefix = "§7[§6RageMode§7] §r",
+    private final String prefix = "§7[§6CookieRage§7] §r",
                          no_Permission = prefix+"§cDu hast leider nicht genügend Rechte.";
+
+    Mysql mysql = new Mysql("localhost", "3306", "System", "admin", "4}58B^pOdKfj0(vH");
 
     @Override
     public void onEnable(){
+        mysql.connect();
+
         players = new ArrayList<>();
         gameStateUtils = new GameStateUtils(this);
+        statsAPI = new StatsAPI(this);
+        statsRanking = new StatsRanking(this);
 
         gameStateUtils.setGameState(GameState.Lobby_State);
         startVoting();
@@ -48,17 +60,21 @@ public class Ragemode extends JavaPlugin {
         pluginManager.registerEvents(new ScoreboardManager(this), this);
         pluginManager.registerEvents(new PlayerChatListener(this), this);
         pluginManager.registerEvents(new PlayerDeathListener(this), this);
+        pluginManager.registerEvents(new PlayerListener(this), this);
         getCommand("setup").setExecutor(new SetupCommand(this));
         getCommand("start").setExecutor(new StartCommand(this));
 
-        System.out.println("[RageMode] Das Plugin wurde gstartet!");
+        System.out.println("[CookieRage] Das Plugin wurde gestartet!");
 
         new ScoreboardManager(this).startHotbar();
+        statsRanking.set();
     }
 
     @Override
     public void onDisable() {
-        System.out.println("[RageMode] Das Plugin wurde gestoppt!");
+        mysql.disconnect();
+
+        System.out.println("[CookieRage] Das Plugin wurde gestoppt!");
     }
 
     public void startVoting(){
@@ -112,5 +128,13 @@ public class Ragemode extends JavaPlugin {
 
     public PlayerDeathListener getPlayerDeathListener() {
         return playerDeathListener;
+    }
+
+    public Mysql getMysql() {
+        return mysql;
+    }
+
+    public StatsAPI getStatsAPI() {
+        return statsAPI;
     }
 }

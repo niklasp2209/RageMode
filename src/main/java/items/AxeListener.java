@@ -2,6 +2,7 @@ package items;
 
 import de.niklas.ragemode.Ragemode;
 import net.minecraft.server.v1_16_R3.PacketPlayOutEntityDestroy;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
@@ -16,6 +17,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 public class AxeListener implements Listener {
 
     private Ragemode plugin;
@@ -29,13 +32,15 @@ public class AxeListener implements Listener {
         Player player = event.getPlayer();
         if(event.getItem() == null)return;
         if(!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK))return;
-        if(!(event.getItem().getType() == Material.IRON_AXE))return;
+        if(!(event.getItem().getType() == Material.COOKIE))return;
         Item item = player.getWorld().dropItem(player.getEyeLocation(), player.getItemInHand());
         item.setVelocity(player.getLocation().getDirection().multiply(1.3D));
         player.setItemInHand(new ItemStack(Material.AIR));
-//        new AxeThread(player, 0.6, item).start();
+        new AxeThread(player, 0.6, item).start();
         Snowball snowball = (Snowball) player.launchProjectile(Snowball.class);
-        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(((CraftSnowball) snowball).getHandle().getId()));
+        snowball.setVelocity(item.getVelocity());
+        for(Player current : Bukkit.getOnlinePlayers())
+        ((CraftPlayer)current).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(((CraftSnowball) snowball).getHandle().getId()));
     }
 
     @EventHandler

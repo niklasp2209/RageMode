@@ -5,6 +5,9 @@ import de.niklas.ragemode.Ragemode;
 import listener.PlayerDeathListener;
 import mapvoting.Maps;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameRule;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Score;
 import utils.FastBoard;
@@ -44,8 +47,13 @@ public class IngameState extends GameState{
             current.setExp(0);
 
             FastBoard fastBoard = new FastBoard(current);
-            fastBoard.updateTitle("§6·§e• RageMode §8| §7Stats");
+            fastBoard.updateTitle("§6·§e• CookieRage §8| §7Stats");
             new ScoreboardManager(plugin).updateBoard(fastBoard);
+        }
+
+        for(World worlds : Bukkit.getWorlds()){
+            worlds.setGameRule(GameRule.KEEP_INVENTORY, true);
+            worlds.setDifficulty(Difficulty.PEACEFUL);
         }
 
         graceCountdown.start();

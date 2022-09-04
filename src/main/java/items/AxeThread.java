@@ -42,22 +42,6 @@ public class AxeThread implements Runnable{
 //                }
 //            }
                 for (Player current : Bukkit.getOnlinePlayers()){
-                    for (Entity entity : Bukkit.getWorld("world").getEntities()) {
-                        Entity entity1 = (Entity) entity.getNearbyEntities(radius, radius, radius);
-                        System.out.println("1");
-                        if (entity1 == null) {
-                            continue;
-                        }
-                        if (entity1 instanceof Player) {
-                            System.out.println("1");
-                            Player target = (Player) entity1;
-                            if (target != player) {
-                                System.out.println("1");
-                                target.setHealth(0);
-                                this.item.remove();
-                                this.stop();
-                            }
-                        }
                     if (item.isOnGround()) {
                         this.item.remove();
                         this.stop();
@@ -66,7 +50,6 @@ public class AxeThread implements Runnable{
                         Thread.sleep(25);
                     } catch (InterruptedException exception) {
                         exception.printStackTrace();
-                    }
                 }
             }
         }
