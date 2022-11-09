@@ -39,7 +39,7 @@ public class Ragemode extends JavaPlugin {
     private final String prefix = "§7[§6CookieRage§7] §r",
                          no_Permission = prefix+"§cDu hast leider nicht genügend Rechte.";
 
-    Mysql mysql = new Mysql("localhost", "3306", "System", "admin", "4}58B^pOdKfj0(vH");
+    Mysql mysql = new Mysql("localhost", "3306", "System", "admin", "");
 
     @Override
     public void onEnable(){
